@@ -7,6 +7,7 @@ import RightSidebar from '../../components/RightSidebar/RightSidebar';
 import Tweet from '../../components/Tweet/Tweet';
 import EditProfile from '../../components/EditProfile/EditProfile';
 import { following } from '../../redux/userSlice';
+import { baseURL } from '../../config';
 
 const Profile = () => {
   const [open, setOpen] = useState(false);
@@ -21,8 +22,8 @@ const Profile = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const userTweetsResponse = await axios.get(`/tweets/user/all/${id}`);
-        const userProfileResponse = await axios.get(`/users/find/${id}`);
+        const userTweetsResponse = await axios.get(`${baseURL}/tweets/user/all/${id}`);
+        const userProfileResponse = await axios.get(`${baseURL}/users/find/${id}`);
         setUserTweets(userTweetsResponse.data);
         setUserProfile(userProfileResponse.data);
       } catch (err) {
@@ -36,19 +37,21 @@ const Profile = () => {
    const handleFollow = async () => {
         if (!currentUser.following.includes(id)) {
             try {
-                const follow = await axios.put(`/users/follow/${id}`, {
+                const follow = await axios.put(`${baseURL}/users/follow/${id}`, {
                     id: currentUser._id,
 
                 });
+                console.log(follow);
                 dispatch(following(id));
             } catch (err) {
                 console.log("error", err)
             }
         } else {
             try {
-                const unfollow = await axios.put(`/users/unfollow/${id}`, {
+                const unfollow = await axios.put(`${baseURL}/users/unfollow/${id}`, {
                     id: currentUser._id,
                 });
+                console.log(unfollow);
                 dispatch(following(id));
             } catch (err) {
                 console.log("error", err)

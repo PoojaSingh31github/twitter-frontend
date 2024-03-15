@@ -2,14 +2,15 @@ import React, { useEffect } from 'react'
 import { useLocation, useParams } from "react-router-dom";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import axios from "axios";
+import { baseURL } from '../../config';
 const UserPlaceholder = ({ setUserData, userData }) => {
     const { id } = useParams();
     const location = useLocation().pathname;
-
+ console.log(location)
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const userProfile = await axios.get(`/users/find/${id}`);
+                const userProfile = await axios.get(`${baseURL}/users/find/${id}`);
                 setUserData(userProfile.data);
             } catch (err) {
                 console.log("err");

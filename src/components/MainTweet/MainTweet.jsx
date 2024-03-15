@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { baseURL } from '../../config';
 
 const MainTweet = () => {
     const { currentUser } = useSelector((state) => state.user);
@@ -12,11 +13,12 @@ const MainTweet = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const submitTweet = await axios.post("/tweets", {
+            const submitTweet = await axios.post(`${baseURL}/tweets`, {
                 userId: currentUser._id,
                 description: tweetText,
 
             });
+            console.log(submitTweet);
             window.location.reload(false);
             toast.success('Tweet posted successfully!');
         } catch (err) {

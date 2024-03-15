@@ -10,6 +10,7 @@ import {
     getDownloadURL
 } from "firebase/storage";
 import app from "../../firebase";
+import { baseURL } from '../../config';
 
 
 const EditProfile = ({ setOpen }) => {
@@ -51,7 +52,7 @@ const EditProfile = ({ setOpen }) => {
                 getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
                     // console.log('File available at', downloadURL);
                     try {
-                        const updateProfile = await axios.put(`/users/${currentUser._id}`, {
+                        const updateProfile = await axios.put(`${baseURL}/users/${currentUser._id}`, {
                             profilePicture: downloadURL,
                         });
 
@@ -68,7 +69,7 @@ const EditProfile = ({ setOpen }) => {
     };
 
     const handleDelete = async () => {
-        const deleteProfile = await axios.delete(`/users/${currentUser._id}`);
+        const deleteProfile = await axios.delete(`${baseURL}/users/${currentUser._id}`);
         console.log(deleteProfile);
         dispatch(logout());
         navigate("/signin");
@@ -77,7 +78,7 @@ const EditProfile = ({ setOpen }) => {
     }
     useEffect(() => {
         img && uploadImg(img);
-    }, [img]);
+    }, [uploadImg]);
 
 
     return (

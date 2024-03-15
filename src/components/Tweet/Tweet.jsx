@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import formatDistance from "date-fns/formatDistance";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import { baseURL } from "../../config";
 
 
 const Tweet = ({ tweet, setData }) => {
@@ -16,7 +17,7 @@ const Tweet = ({ tweet, setData }) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const findUser = await axios.get(`/users/find/${tweet.userId}`);
+                const findUser = await axios.get(`${baseURL}/users/find/${tweet.userId}`);
                 setUserData(findUser.data);
             } catch (err) {
                 console.log("error", err)
@@ -29,9 +30,10 @@ const Tweet = ({ tweet, setData }) => {
     const handleLike = async (e) => {
         e.preventDefault();
         try {
-            const like = axios.put(`/tweets/${tweet._id}/like`, {
+            const like = axios.put(`${baseURL}/tweets/${tweet._id}/like`, {
                 id: currentUser._id,
             });
+            console.log(like);
             if (location.includes("profile")) {
                 const newData = await axios.get(`/tweets/user/all/${id}`);
                 setData(newData.data);

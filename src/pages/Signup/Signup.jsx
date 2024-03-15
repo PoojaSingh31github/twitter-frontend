@@ -5,6 +5,7 @@ import { loginStart, loginSuccess, loginFailed } from '../../redux/userSlice';
 import { Link, useNavigate } from "react-router-dom"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { baseURL } from '../../config';
 
 const Signup = () => {
     const [username, setUsername] = useState("");
@@ -16,7 +17,7 @@ const Signup = () => {
         e.preventDefault();
         dispatch(loginStart());
         try {
-            const res = await axios.post("/auth/signup", { username, email, password });
+            const res = await axios.post(`${baseURL}/auth/signup`, { username, email, password });
             dispatch(loginSuccess(res.data));
             navigate("/");
             toast.success('signup successful!');

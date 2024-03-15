@@ -5,6 +5,7 @@ import { loginStart, loginSuccess, loginFailed } from '../../redux/userSlice';
 import { Link, useNavigate } from "react-router-dom"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { baseURL } from '../../config';
 
 // Main sign in page are started from here and we use 
 const Signin = () => {
@@ -20,7 +21,7 @@ const Signin = () => {
         //once login success navgate to home page
         navigate("/");
         try {
-            const res = await axios.post("/auth/signin", { username, password })
+            const res = await axios.post(`${baseURL}/auth/signin`, { username, password })
             dispatch(loginSuccess(res.data));
             toast.success('Login successful!');
 

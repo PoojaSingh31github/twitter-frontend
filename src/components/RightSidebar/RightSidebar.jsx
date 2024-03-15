@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { baseURL } from '../../config';
 
 const RightSidebar = () => {
   const [users, setUsers] = useState([]);
@@ -7,7 +8,7 @@ const RightSidebar = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('/api/findall'); // Replace with your API endpoint
+        const response = await axios.get(`${baseURL}/api/findall`); // Replace with your API endpoint
         const data = response.data;
         setUsers(data);
       } catch (error) {
